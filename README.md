@@ -21,15 +21,15 @@ Open source projects:
 
 Install from github (not published on npm yet):
 ```sh
-$ npm install https://github.com/dblazeski/express-chrome-ssr.git
+$ npm install https://github.com/IvanMakarenko/express-chrome-ssr.git
 or
-$ yarn add https://github.com/dblazeski/express-chrome-ssr.git
+$ yarn add https://github.com/IvanMakarenko/express-chrome-ssr.git
 ```
 
 Install the dependencies and devDependencies and start the server.
 
 ```sh
-$ git clone https://github.com/dblazeski/express-chrome-ssr.git
+$ git clone https://github.com/IvanMakarenko/express-chrome-ssr.git
 $ cd express-chrome-ssr
 $ npm install (or yarn install)
 $ npm run dev (or yarn dev)
@@ -38,7 +38,7 @@ $ npm run dev (or yarn dev)
 For production environments...
 
 ```sh
-$ git clone https://github.com/dblazeski/express-chrome-ssr.git
+$ git clone https://github.com/IvanMakarenko/express-chrome-ssr.git
 $ cd express-chrome-ssr
 $ npm install (or yarn install)
 $ npm run start_production_server (or yarn start_production_server)
@@ -52,11 +52,14 @@ $ yarn start_production_server --port=3000
 ```
 * Start the server (locally or on production)
 * Visit /ssr and add your url in the url param
+* **Do not forget to fix the loop call, as this plugin can be defined as a bot**
 
 The script has two url's (you can replace localhost with your domain if running it on server or virtual box)
 
 * `http://localhost:3000/test` - To make sure the server is running
 * `http://localhost:3000/ssr?url=THE_URL_TO_RENDER` - Will return server side rendered html of the url
+* `http://localhost:3000/ssr?userAgent=USER_AGENT&url=THE_URL_TO_RENDER` - Will return server side rendered html of the url with supporting user Agent
+* `http://localhost:3000/ssr?device=TYPE&url=THE_URL_TO_RENDER` - Will return server side rendered html of the url with supporting desktop and mobile device, 1 - Desktop, 2 - Mobile
 
 ### Development
 

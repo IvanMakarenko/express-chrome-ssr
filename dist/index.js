@@ -33,55 +33,53 @@ app.use(function (req, res, next) {
 });
 app.get('/test', _test.test);
 var browserWSEndpoint = null;
-app.get('/ssr',
-/*#__PURE__*/
-function () {
-  var _ref = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee(req, res, next) {
-    var url, browser, _ref2, html, status;
+app.get('/ssr', /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
+    var url, userAgent, device, browser, _yield$ssr, html, status;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             url = req.query.url;
+            userAgent = req.query.userAgent;
+            device = req.query.device;
 
             if (url) {
-              _context.next = 3;
+              _context.next = 5;
               break;
             }
 
             return _context.abrupt("return", res.status(400).send('Invalid url param: Example: ?url=https://binge.app'));
 
-          case 3:
+          case 5:
             if (browserWSEndpoint) {
-              _context.next = 10;
+              _context.next = 12;
               break;
             }
 
-            _context.next = 6;
+            _context.next = 8;
             return _puppeteer["default"].launch();
 
-          case 6:
+          case 8:
             browser = _context.sent;
-            _context.next = 9;
+            _context.next = 11;
             return browser.wsEndpoint();
 
-          case 9:
+          case 11:
             browserWSEndpoint = _context.sent;
 
-          case 10:
-            _context.next = 12;
-            return (0, _ssr.ssr)(url, browserWSEndpoint);
-
           case 12:
-            _ref2 = _context.sent;
-            html = _ref2.html;
-            status = _ref2.status;
+            _context.next = 14;
+            return (0, _ssr.ssr)(url, browserWSEndpoint, userAgent !== null && userAgent !== void 0 ? userAgent : device);
+
+          case 14:
+            _yield$ssr = _context.sent;
+            html = _yield$ssr.html;
+            status = _yield$ssr.status;
             return _context.abrupt("return", res.status(status).send(html));
 
-          case 16:
+          case 18:
           case "end":
             return _context.stop();
         }
