@@ -53,20 +53,8 @@ export async function ssr(url, browserWSEndpoint, userAgent) {
 		await page.setRequestInterception(true);
 
 		// set user agent (override the default headless User Agent)
-		if (userAgent.length == 1) {
-			if (userAgent == 1) {
-				await page.setViewport({
-					'width': 800,
-					'width': 600,
-					'isMobile': false,
-				});
-			}
-			if (userAgent == 2) {
-				await page.emulate(puppeteer.devices['iPhone XR']);
-			}
-		} else {
-			await page.setUserAgent(userAgent);
-			await page.setViewport({});
+		if (userAgent == 2) {
+			await page.emulate(puppeteer.devices['iPhone XR']);
 		}
 
 		page.on('request', request => {
