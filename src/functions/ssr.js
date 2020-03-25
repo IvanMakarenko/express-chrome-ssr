@@ -42,7 +42,7 @@ const skippedResources = [
  * @param {string} browserWSEndpoint Optional remote debugging URL. If
  *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
  *     a new browser instance is launched.
- * @param {int} device of bot for supporting mobile theme, 1 - desktop, 2 - for iPhone XR
+ * @param {int} userAgent of bot; Or use device 1 - for desktop, 2 - for iPhone XR
  */
 export async function ssr(url, browserWSEndpoint, userAgent) {
 

@@ -24,7 +24,7 @@ var skippedResources = ['quantserve', 'adzerk', 'doubleclick', 'adition', 'exela
  * @param {string} browserWSEndpoint Optional remote debugging URL. If
  *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
  *     a new browser instance is launched.
- * @param {string} userAgent of bot for supporting mobile theme | or use 2 for iPhone XR
+ * @param {int} userAgent of bot; Or use device 1 - for desktop, 2 - for iPhone XR
  */
 
 function ssr(_x, _x2, _x3) {
@@ -56,29 +56,34 @@ function _ssr() {
             return page.setRequestInterception(true);
 
           case 9:
+            if (!Number.isInteger(userAgent)) {
+              _context.next = 16;
+              break;
+            }
+
             if (!(userAgent == 2)) {
-              _context.next = 15;
+              _context.next = 14;
               break;
             }
 
             iPhone = _puppeteer["default"].devices['iPhone XR'];
-            _context.next = 13;
+            _context.next = 14;
             return page.emulate(iPhone);
 
-          case 13:
-            _context.next = 18;
+          case 14:
+            _context.next = 19;
             break;
 
-          case 15:
+          case 16:
             if (!(typeof userAgent === "string")) {
-              _context.next = 18;
+              _context.next = 19;
               break;
             }
 
-            _context.next = 18;
+            _context.next = 19;
             return page.setUserAgent(userAgent);
 
-          case 18:
+          case 19:
             page.on('request', function (request) {
               var requestUrl = request._url.split('?')[0].split('#')[0];
 
@@ -90,15 +95,15 @@ function _ssr() {
                 request["continue"]();
               }
             });
-            _context.next = 21;
+            _context.next = 22;
             return page["goto"](url, {
               timeout: 25000,
               waitUntil: 'networkidle2'
             });
 
-          case 21:
+          case 22:
             response = _context.sent;
-            _context.next = 24;
+            _context.next = 25;
             return page.evaluate(function (url) {
               var base = document.createElement('base');
               base.href = url; // Add to top of head, before all other resources.
@@ -106,8 +111,8 @@ function _ssr() {
               document.head.prepend(base);
             }, url);
 
-          case 24:
-            _context.next = 26;
+          case 25:
+            _context.next = 27;
             return page.evaluate(function () {
               var elements = document.querySelectorAll('script, link[rel="import"]');
               elements.forEach(function (e) {
@@ -115,23 +120,23 @@ function _ssr() {
               });
             });
 
-          case 26:
-            _context.next = 28;
+          case 27:
+            _context.next = 29;
             return page.content();
 
-          case 28:
+          case 29:
             html = _context.sent;
-            _context.next = 31;
+            _context.next = 32;
             return page.close();
 
-          case 31:
+          case 32:
             return _context.abrupt("return", {
               html: html,
               status: response ? response.status() : 200
             });
 
-          case 34:
-            _context.prev = 34;
+          case 35:
+            _context.prev = 35;
             _context.t0 = _context["catch"](3);
             _html = _context.t0.toString();
             console.warn({
@@ -142,12 +147,12 @@ function _ssr() {
               status: 500
             });
 
-          case 39:
+          case 40:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[3, 34]]);
+    }, _callee, null, [[3, 35]]);
   }));
   return _ssr.apply(this, arguments);
 }

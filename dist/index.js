@@ -71,7 +71,7 @@ app.get('/ssr', /*#__PURE__*/function () {
 
           case 12:
             _context.next = 14;
-            return (0, _ssr.ssr)(url, browserWSEndpoint, userAgent !== null && userAgent !== void 0 ? userAgent : device);
+            return (0, _ssr.ssr)(url, browserWSEndpoint, device !== null && device !== void 0 ? device : userAgent);
 
           case 14:
             _yield$ssr = _context.sent;
