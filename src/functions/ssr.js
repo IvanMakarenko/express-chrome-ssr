@@ -96,7 +96,8 @@ export async function ssr(url, browserWSEndpoint, userAgent) {
 		// Close the page we opened here (not the browser).
 		await page.close();
 
-		return { html, status: response.status() }
+		// response can be empty if get from cache
+		return { html, status: response ? response.status() : 200 }
 	}
 	catch (e) {
 		const html = e.toString();
