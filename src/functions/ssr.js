@@ -42,7 +42,7 @@ const skippedResources = [
  * @param {string} browserWSEndpoint Optional remote debugging URL. If
  *     provided, Puppeteer's reconnects to the browser instance. Otherwise,
  *     a new browser instance is launched.
- * @param {string} userAgent of bot for supporting mobile theme | or use 2 for iPhone XR
+ * @param {int} device of bot for supporting mobile theme, 1 - desktop, 2 - for iPhone XR
  */
 export async function ssr(url, browserWSEndpoint, userAgent) {
 
@@ -53,9 +53,11 @@ export async function ssr(url, browserWSEndpoint, userAgent) {
 		await page.setRequestInterception(true);
 
 		// set user agent (override the default headless User Agent)
-		if (userAgent == 2) {
-			const iPhone = puppeteer.devices['iPhone XR'];
-			await page.emulate(iPhone);
+		if (Number.isInteger(userAgent)) {
+			if (userAgent == 2) {
+				const iPhone = puppeteer.devices['iPhone XR'];
+				await page.emulate(iPhone);
+			}
 		} else if (typeof userAgent === "string") {
 			await page.setUserAgent(userAgent);
 		}

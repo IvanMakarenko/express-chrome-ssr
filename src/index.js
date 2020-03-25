@@ -41,7 +41,7 @@ app.get('/ssr', async (req, res, next) => {
 		browserWSEndpoint = await browser.wsEndpoint();
 	}
 
-	const { html, status } = await ssr(url, browserWSEndpoint, userAgent ?? device);
+	const { html, status } = await ssr(url, browserWSEndpoint, device ?? userAgent);
 	// console.timeEnd(`URL_START:${url}`)
 	return res.status(status).send(html);
 })
