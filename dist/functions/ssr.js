@@ -127,7 +127,7 @@ function _ssr() {
           case 31:
             return _context.abrupt("return", {
               html: html,
-              status: response.status()
+              status: response ? response.status() : 200
             });
 
           case 34:
