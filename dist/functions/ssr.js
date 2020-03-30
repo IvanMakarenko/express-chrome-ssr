@@ -17,7 +17,7 @@ var _puppeteer = _interopRequireDefault(require("puppeteer"));
 // Dont download all resources, we just need the HTML
 // Also, this is huge performance/response time boost
 var blockedResourceTypes = ['image', 'media', 'font', 'texttrack', 'object', 'beacon', 'csp_report', 'imageset'];
-var skippedResources = ['quantserve', 'adzerk', 'doubleclick', 'adition', 'exelator', 'sharethrough', 'cdn.api.twitter', 'google-analytics', 'googletagmanager', 'google', 'fontawesome', 'facebook', 'analytics', 'optimizely', 'clicktale', 'mixpanel', 'zedo', 'clicksor', 'tiqcdn'];
+var skippedResources = ['quantserve', 'adzerk', 'doubleclick', 'adition', 'exelator', 'sharethrough', 'cdn.api.twitter', 'google-analytics', 'googletagmanager', 'googleapis', 'google', 'fontawesome', 'bootstrap', 'facebook', 'analytics', 'optimizely', 'clicktale', 'mixpanel', 'zedo', 'clicksor', 'tiqcdn'];
 /**
  * https://developers.google.com/web/tools/puppeteer/articles/ssr#reuseinstance
  * @param {string} url URL to prerender.
@@ -53,18 +53,22 @@ function _ssr() {
           case 6:
             page = _context.sent;
             _context.next = 9;
-            return page.setRequestInterception(true);
+            return page.setCacheEnabled(false);
 
           case 9:
+            _context.next = 11;
+            return page.setRequestInterception(true);
+
+          case 11:
             if (!(userAgent == 2)) {
-              _context.next = 12;
+              _context.next = 14;
               break;
             }
 
-            _context.next = 12;
+            _context.next = 14;
             return page.emulate(_puppeteer["default"].devices['iPhone XR']);
 
-          case 12:
+          case 14:
             page.on('request', function (request) {
               var requestUrl = request._url.split('?')[0].split('#')[0];
 
@@ -76,15 +80,15 @@ function _ssr() {
                 request["continue"]();
               }
             });
-            _context.next = 15;
+            _context.next = 17;
             return page["goto"](url, {
               timeout: 25000,
               waitUntil: 'networkidle2'
             });
 
-          case 15:
+          case 17:
             response = _context.sent;
-            _context.next = 18;
+            _context.next = 20;
             return page.evaluate(function (url) {
               var base = document.createElement('base');
               base.href = url; // Add to top of head, before all other resources.
@@ -92,8 +96,8 @@ function _ssr() {
               document.head.prepend(base);
             }, url);
 
-          case 18:
-            _context.next = 20;
+          case 20:
+            _context.next = 22;
             return page.evaluate(function () {
               var elements = document.querySelectorAll('script, link[rel="import"]');
               elements.forEach(function (e) {
@@ -101,23 +105,23 @@ function _ssr() {
               });
             });
 
-          case 20:
-            _context.next = 22;
+          case 22:
+            _context.next = 24;
             return page.content();
 
-          case 22:
+          case 24:
             html = _context.sent;
-            _context.next = 25;
+            _context.next = 27;
             return page.close();
 
-          case 25:
+          case 27:
             return _context.abrupt("return", {
               html: html,
               status: response ? response.status() : 200
             });
 
-          case 28:
-            _context.prev = 28;
+          case 30:
+            _context.prev = 30;
             _context.t0 = _context["catch"](3);
             _html = _context.t0.toString();
             console.warn({
@@ -128,12 +132,12 @@ function _ssr() {
               status: 500
             });
 
-          case 33:
+          case 35:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[3, 28]]);
+    }, _callee, null, [[3, 30]]);
   }));
   return _ssr.apply(this, arguments);
 }

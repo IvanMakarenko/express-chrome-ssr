@@ -24,8 +24,10 @@ const skippedResources = [
 	'cdn.api.twitter',
 	'google-analytics',
 	'googletagmanager',
+	'googleapis',
 	'google',
 	'fontawesome',
+	'bootstrap',
 	'facebook',
 	'analytics',
 	'optimizely',
@@ -50,6 +52,7 @@ export async function ssr(url, browserWSEndpoint, userAgent) {
 
 	try {
 		const page = await browser.newPage();
+		await page.setCacheEnabled(false);
 		await page.setRequestInterception(true);
 
 		// set user agent (override the default headless User Agent)
