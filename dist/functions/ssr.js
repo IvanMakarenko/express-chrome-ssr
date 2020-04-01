@@ -33,7 +33,7 @@ function ssr(_x, _x2, _x3) {
 
 function _ssr() {
   _ssr = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(url, browserWSEndpoint, userAgent) {
-    var browser, page, response, html, _html;
+    var browser, renderUrl, page, response, html, _html;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -47,28 +47,21 @@ function _ssr() {
           case 2:
             browser = _context.sent;
             _context.prev = 3;
-            _context.next = 6;
+            renderUrl = new URL(url);
+            _context.next = 7;
             return browser.newPage();
 
-          case 6:
+          case 7:
             page = _context.sent;
-            _context.next = 9;
-            return page.setCacheEnabled(false);
-
-          case 9:
-            _context.next = 11;
+            _context.next = 10;
             return page.setRequestInterception(true);
 
-          case 11:
-            if (!(userAgent == 2)) {
-              _context.next = 14;
-              break;
+          case 10:
+            // set user agent (override the default headless User Agent)
+            if (userAgent == 2) {
+              renderUrl.searchParams.set('device2', ''); // await page.emulate(puppeteer.devices['iPhone XR']);
             }
 
-            _context.next = 14;
-            return page.emulate(_puppeteer["default"].devices['iPhone XR']);
-
-          case 14:
             page.on('request', function (request) {
               var requestUrl = request._url.split('?')[0].split('#')[0];
 
@@ -80,15 +73,15 @@ function _ssr() {
                 request["continue"]();
               }
             });
-            _context.next = 17;
+            _context.next = 14;
             return page["goto"](url, {
               timeout: 25000,
               waitUntil: 'networkidle2'
             });
 
-          case 17:
+          case 14:
             response = _context.sent;
-            _context.next = 20;
+            _context.next = 17;
             return page.evaluate(function (url) {
               var base = document.createElement('base');
               base.href = url; // Add to top of head, before all other resources.
@@ -96,8 +89,8 @@ function _ssr() {
               document.head.prepend(base);
             }, url);
 
-          case 20:
-            _context.next = 22;
+          case 17:
+            _context.next = 19;
             return page.evaluate(function () {
               var elements = document.querySelectorAll('script, link[rel="import"]');
               elements.forEach(function (e) {
@@ -105,23 +98,23 @@ function _ssr() {
               });
             });
 
-          case 22:
-            _context.next = 24;
+          case 19:
+            _context.next = 21;
             return page.content();
 
-          case 24:
+          case 21:
             html = _context.sent;
-            _context.next = 27;
+            _context.next = 24;
             return page.close();
 
-          case 27:
+          case 24:
             return _context.abrupt("return", {
               html: html,
               status: response ? response.status() : 200
             });
 
-          case 30:
-            _context.prev = 30;
+          case 27:
+            _context.prev = 27;
             _context.t0 = _context["catch"](3);
             _html = _context.t0.toString();
             console.warn({
@@ -132,12 +125,12 @@ function _ssr() {
               status: 500
             });
 
-          case 35:
+          case 32:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[3, 30]]);
+    }, _callee, null, [[3, 27]]);
   }));
   return _ssr.apply(this, arguments);
 }

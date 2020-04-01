@@ -51,13 +51,14 @@ export async function ssr(url, browserWSEndpoint, userAgent) {
 	const browser = await puppeteer.connect({ browserWSEndpoint });
 
 	try {
+		const renderUrl = new URL(url);
 		const page = await browser.newPage();
-		await page.setCacheEnabled(false);
 		await page.setRequestInterception(true);
 
 		// set user agent (override the default headless User Agent)
 		if (userAgent == 2) {
-			await page.emulate(puppeteer.devices['iPhone XR']);
+			renderUrl.searchParams.set('device2', '');
+			// await page.emulate(puppeteer.devices['iPhone XR']);
 		}
 
 		page.on('request', request => {
