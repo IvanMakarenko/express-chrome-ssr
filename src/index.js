@@ -26,8 +26,6 @@ let browserWSEndpoint = null;
 app.get('/ssr', async (req, res, next) => {
 
 	const { url } = req.query;
-	const { userAgent } = req.query;
-	const { device } = req.query;
 
 	if (!url) {
 		return res.status(400).send('Invalid url param: Example: ?url=https://binge.app');
@@ -41,7 +39,7 @@ app.get('/ssr', async (req, res, next) => {
 		browserWSEndpoint = await browser.wsEndpoint();
 	}
 
-	const { html, status } = await ssr(url, browserWSEndpoint, device ?? userAgent);
+	const { html, status } = await ssr(url, browserWSEndpoint);
 	// console.timeEnd(`URL_START:${url}`)
 	return res.status(status).send(html);
 })

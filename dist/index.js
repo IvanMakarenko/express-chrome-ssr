@@ -35,51 +35,49 @@ app.get('/test', _test.test);
 var browserWSEndpoint = null;
 app.get('/ssr', /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
-    var url, userAgent, device, browser, _yield$ssr, html, status;
+    var url, browser, _yield$ssr, html, status;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             url = req.query.url;
-            userAgent = req.query.userAgent;
-            device = req.query.device;
 
             if (url) {
-              _context.next = 5;
+              _context.next = 3;
               break;
             }
 
             return _context.abrupt("return", res.status(400).send('Invalid url param: Example: ?url=https://binge.app'));
 
-          case 5:
+          case 3:
             if (browserWSEndpoint) {
-              _context.next = 12;
+              _context.next = 10;
               break;
             }
 
-            _context.next = 8;
+            _context.next = 6;
             return _puppeteer["default"].launch();
 
-          case 8:
+          case 6:
             browser = _context.sent;
-            _context.next = 11;
+            _context.next = 9;
             return browser.wsEndpoint();
 
-          case 11:
+          case 9:
             browserWSEndpoint = _context.sent;
 
-          case 12:
-            _context.next = 14;
-            return (0, _ssr.ssr)(url, browserWSEndpoint, device !== null && device !== void 0 ? device : userAgent);
+          case 10:
+            _context.next = 12;
+            return (0, _ssr.ssr)(url, browserWSEndpoint);
 
-          case 14:
+          case 12:
             _yield$ssr = _context.sent;
             html = _yield$ssr.html;
             status = _yield$ssr.status;
             return _context.abrupt("return", res.status(status).send(html));
 
-          case 18:
+          case 16:
           case "end":
             return _context.stop();
         }

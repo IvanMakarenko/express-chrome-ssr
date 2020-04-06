@@ -58,8 +58,6 @@ The script has two url's (you can replace localhost with your domain if running 
 
 * `http://localhost:3000/test` - To make sure the server is running
 * `http://localhost:3000/ssr?url=THE_URL_TO_RENDER` - Will return server side rendered html of the url
-* `http://localhost:3000/ssr?userAgent=USER_AGENT&url=THE_URL_TO_RENDER` - Will return server side rendered html of the url with supporting user Agent
-* `http://localhost:3000/ssr?device=TYPE&url=THE_URL_TO_RENDER` - Will return server side rendered html of the url with supporting desktop and mobile device, 1 - Desktop, 2 - Mobile
 
 ### Development
 
