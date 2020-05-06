@@ -85,7 +85,7 @@ function _ssr() {
           case 15:
             _context.next = 17;
             return page.evaluate(function () {
-              var elements = document.querySelectorAll('script, link[rel="import"], style, #__SVG_SPRITE_NODE__');
+              var elements = document.querySelectorAll('script:not(.notremove), link[rel="import"], style, #__SVG_SPRITE_NODE__');
               elements.forEach(function (e) {
                 return e.remove();
               });
