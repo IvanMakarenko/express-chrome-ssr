@@ -57,7 +57,9 @@ app.get('/ssr', /*#__PURE__*/function () {
             }
 
             _context.next = 6;
-            return _puppeteer["default"].launch();
+            return _puppeteer["default"].launch({
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
 
           case 6:
             browser = _context.sent;

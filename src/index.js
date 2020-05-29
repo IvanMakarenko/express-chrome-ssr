@@ -35,7 +35,7 @@ app.get('/ssr', async (req, res, next) => {
 	// console.log(`browserWSEndpoint is::${(browserWSEndpoint)}`)
 	// Spin new instance if we dont have an active one
 	if (!browserWSEndpoint) {
-		const browser = await puppeteer.launch();
+		const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
 		browserWSEndpoint = await browser.wsEndpoint();
 	}
 
