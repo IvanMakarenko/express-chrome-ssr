@@ -81,7 +81,7 @@ export async function ssr(url, browserWSEndpoint) {
 
 		// Remove scripts and html imports. They've already executed.
 		await page.evaluate(() => {
-			const elements = document.querySelectorAll('.ssr-remove, script:not(.ssr-not-remove), link[rel="import"], style:not(.ssr-not-remove) #__SVG_SPRITE_NODE__');
+			const elements = document.querySelectorAll('.ssr-remove, script:not(.ssr-not-remove), link[rel="import"], style:not(.ssr-not-remove), #__SVG_SPRITE_NODE__');
 			elements.forEach(e => e.remove());
 		});
 

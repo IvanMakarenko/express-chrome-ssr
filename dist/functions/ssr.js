@@ -85,7 +85,7 @@ function _ssr() {
           case 15:
             _context.next = 17;
             return page.evaluate(function () {
-              var elements = document.querySelectorAll('script:not(.notremove), link[rel="import"], style:not(.notremove) #__SVG_SPRITE_NODE__');
+              var elements = document.querySelectorAll('.ssr-remove, script:not(.ssr-not-remove), link[rel="import"], style:not(.ssr-not-remove), #__SVG_SPRITE_NODE__');
               elements.forEach(function (e) {
                 return e.remove();
               });
@@ -113,12 +113,16 @@ function _ssr() {
             console.warn({
               message: "URL: ".concat(url, " Failed with message: ").concat(_html)
             });
+            _context.next = 31;
+            return page.close();
+
+          case 31:
             return _context.abrupt("return", {
               html: _html,
               status: 500
             });
 
-          case 30:
+          case 32:
           case "end":
             return _context.stop();
         }
