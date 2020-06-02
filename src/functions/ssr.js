@@ -27,6 +27,7 @@ const skippedResources = [
 	'googleapis',
 	'google',
 	'fontawesome',
+	'vue-multiselect',
 	'bootstrap',
 	'facebook',
 	'analytics',
@@ -48,9 +49,9 @@ const skippedResources = [
 export async function ssr(url, browserWSEndpoint) {
 
 	const browser = await puppeteer.connect({ browserWSEndpoint });
+	const page = await browser.newPage();
 
 	try {
-		const page = await browser.newPage();
 		await page.setRequestInterception(true);
 
 		page.on('request', request => {
@@ -80,7 +81,7 @@ export async function ssr(url, browserWSEndpoint) {
 
 		// Remove scripts and html imports. They've already executed.
 		await page.evaluate(() => {
-			const elements = document.querySelectorAll('script:not(.notremove), link[rel="import"], style:not(.notremove) #__SVG_SPRITE_NODE__');
+			const elements = document.querySelectorAll('.ssr-remove, script:not(.ssr-not-remove), link[rel="import"], style:not(.ssr-not-remove) #__SVG_SPRITE_NODE__');
 			elements.forEach(e => e.remove());
 		});
 
@@ -95,6 +96,7 @@ export async function ssr(url, browserWSEndpoint) {
 	catch (e) {
 		const html = e.toString();
 		console.warn({ message: `URL: ${url} Failed with message: ${html}` })
+		await page.close();
 		return { html, status: 500 }
 	}
 

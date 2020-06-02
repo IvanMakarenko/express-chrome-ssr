@@ -17,7 +17,7 @@ var _puppeteer = _interopRequireDefault(require("puppeteer"));
 // Dont download all resources, we just need the HTML
 // Also, this is huge performance/response time boost
 var blockedResourceTypes = ['image', 'media', 'font', 'texttrack', 'object', 'beacon', 'csp_report', 'imageset'];
-var skippedResources = ['quantserve', 'adzerk', 'doubleclick', 'adition', 'exelator', 'sharethrough', 'cdn.api.twitter', 'google-analytics', 'googletagmanager', 'googleapis', 'google', 'fontawesome', 'bootstrap', 'facebook', 'analytics', 'optimizely', 'clicktale', 'mixpanel', 'zedo', 'clicksor', 'tiqcdn'];
+var skippedResources = ['quantserve', 'adzerk', 'doubleclick', 'adition', 'exelator', 'sharethrough', 'cdn.api.twitter', 'google-analytics', 'googletagmanager', 'googleapis', 'google', 'fontawesome', 'vue-multiselect', 'bootstrap', 'facebook', 'analytics', 'optimizely', 'clicktale', 'mixpanel', 'zedo', 'clicksor', 'tiqcdn'];
 /**
  * https://developers.google.com/web/tools/puppeteer/articles/ssr#reuseinstance
  * @param {string} url URL to prerender.
@@ -45,12 +45,12 @@ function _ssr() {
 
           case 2:
             browser = _context.sent;
-            _context.prev = 3;
-            _context.next = 6;
+            _context.next = 5;
             return browser.newPage();
 
-          case 6:
+          case 5:
             page = _context.sent;
+            _context.prev = 6;
             _context.next = 9;
             return page.setRequestInterception(true);
 
@@ -108,7 +108,7 @@ function _ssr() {
 
           case 25:
             _context.prev = 25;
-            _context.t0 = _context["catch"](3);
+            _context.t0 = _context["catch"](6);
             _html = _context.t0.toString();
             console.warn({
               message: "URL: ".concat(url, " Failed with message: ").concat(_html)
@@ -123,7 +123,7 @@ function _ssr() {
             return _context.stop();
         }
       }
-    }, _callee, null, [[3, 25]]);
+    }, _callee, null, [[6, 25]]);
   }));
   return _ssr.apply(this, arguments);
 }
